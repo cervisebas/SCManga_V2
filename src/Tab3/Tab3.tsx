@@ -3,12 +3,13 @@ import { Dimensions, FlatList, SafeAreaView, StyleSheet, View } from 'react-nati
 import { ActivityIndicator, Searchbar, Text, Provider as PaperProvider } from 'react-native-paper';
 import { itemList1 } from '../@scripts/Components';
 import { popular } from '../@types/ApiManga';
-import { Global } from '../@scripts/Global';
 import { Search } from '../@Icons/Icons';
 import { ApiManga } from '../@scripts/ApiAnime';
 import Styles from '../Styles';
 
-interface IProps {};
+interface IProps {
+    goInfoManga: (url: string)=>any;
+};
 interface IState {
     searchQuery: string;
     searchResults: popular[];
@@ -17,7 +18,6 @@ interface IState {
 };
 
 const apiManga = new ApiManga();
-const fglobal = new Global({});
 const { width, height } = Dimensions.get('window');
 
 export class Tab3 extends Component<IProps, IState> {
@@ -85,7 +85,7 @@ export class Tab3 extends Component<IProps, IState> {
                     data={this.state.searchResults}
                     style={{ marginBottom: 116 }}
                     extraData={this.state.isLoading}
-                    renderItem={({item})=>itemList1(item, (url: string)=>fglobal.openViewInfo(url))}
+                    renderItem={({item})=>itemList1(item, (url: string)=>this.props.goInfoManga(url))}
                 />)}
             </SafeAreaView>
         </View>);

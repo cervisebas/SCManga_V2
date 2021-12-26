@@ -1,10 +1,11 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Divider, List, Text, TouchableRipple } from "react-native-paper";
-import { popular, newMangas } from "../@types/ApiManga";
-import { chapter, optionChapter } from "../@types/ViewInfo";
+import { Divider, List, Text, TouchableRipple, Button } from "react-native-paper";
+import { popular, newMangas, favorite } from "../@types/ApiManga";
+import { chapter } from "../@types/ViewInfo";
+import { Alert } from '../@Icons/Icons';
+import { rippleColor, themeDefault } from "../Styles";
 
-const rippleColor: string = 'rgba(0, 0, 0, .16)';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -18,16 +19,22 @@ const styles = StyleSheet.create({
         margin: 0,
         height: 85,
         flexGrow: 0
+    },
+    itemList3: {
+        margin: 0,
+        height: 65,
+        flexGrow: 0
     }
 });
 
 const itemList1 = (data: popular, action: (url: string)=>void)=>{
     return(<View style={styles.container}>
-        <TouchableRipple onPress={()=>{ action(data.url); }} style={{ justifyContent: 'center' }} rippleColor={rippleColor}>
+        <TouchableRipple theme={themeDefault} onPress={()=>{ action(data.url); }} style={{ justifyContent: 'center' }} rippleColor={rippleColor}>
             <List.Item
                 title={data.title}
                 description={()=><Text style={{ marginLeft: 8, color: '#666666' }}>{data.type}</Text>}
                 style={styles.itemList1}
+                theme={themeDefault}
                 left={()=><Image source={{ uri: data.image }} style={{ width: 110, height: 150, borderRadius: 4 }} /> }
             />
         </TouchableRipple>
@@ -36,11 +43,12 @@ const itemList1 = (data: popular, action: (url: string)=>void)=>{
 };
 const itemList2 = (data: newMangas, action: (url: string, chapter: string)=>void)=>{
     return(<View style={styles.container}>
-        <TouchableRipple onPress={()=>{ action(data.url, `Capitulo ${data.chapter} - ${data.title}`); }} style={{ justifyContent: 'center' }} rippleColor={rippleColor}>
+        <TouchableRipple theme={themeDefault} onPress={()=>{ action(data.url, `Capitulo ${data.chapter} - ${data.title}`); }} style={{ justifyContent: 'center' }} rippleColor={rippleColor}>
             <List.Item
                 title={data.title}
                 description={()=><Text style={{ marginLeft: 4, color: '#666666' }}>Capitulo {data.chapter}</Text>}
                 style={styles.itemList2}
+                theme={themeDefault}
                 left={()=><Image source={require('../Assets/Icon1.png')} style={{ width: 70, height: 70, borderRadius: 4 }} /> }
             />
         </TouchableRipple>
@@ -49,11 +57,35 @@ const itemList2 = (data: newMangas, action: (url: string, chapter: string)=>void
 };
 const itemList3 = (data: chapter, key: number, title: string, action: (url: string, chapter: string)=>void)=>{
     return(<View style={styles.container} key={key}>
-        <TouchableRipple onPress={()=>{ action(data.url, `Capitulo ${data.chapter} - ${title}`); }} style={{ justifyContent: 'center' }} rippleColor={rippleColor}>
+        <TouchableRipple theme={themeDefault} onPress={()=>{ action(data.url, `Capitulo ${data.chapter} - ${title}`); }} style={{ justifyContent: 'center' }} rippleColor={rippleColor}>
             <List.Item
                 title={data.chapter}
-                style={styles.itemList2}
-                left={()=><Image source={require('../Assets/Icon1.png')} style={{ width: 70, height: 70, borderRadius: 4 }} /> }
+                style={styles.itemList3}
+                theme={themeDefault}
+                left={()=><Image source={require('../Assets/Icon1.png')} style={{ width: 50, height: 50 }} /> }
+            />
+        </TouchableRipple>
+        <Divider />
+    </View>);
+};
+const ShowError = (props: { retry: ()=>any })=>{
+    return(<View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+        <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Alert width={96} height={96} />
+            <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 8 }}>Lo siento, ocurrió un error.</Text>
+            <Button icon="reload" color="#f4511e" style={{ marginTop: 8 }} onPress={()=>props.retry()} mode="text">Reintentar</Button>
+        </View>
+    </View>);
+};
+const itemList4 = (data: favorite, action: (url: string)=>void)=>{
+    return(<View style={styles.container}>
+        <TouchableRipple theme={themeDefault} onPress={()=>{ action(data.url); }} style={{ justifyContent: 'center' }} rippleColor={rippleColor}>
+            <List.Item
+                title={data.title}
+                description={()=><Text style={{ marginLeft: 8, color: '#666666' }}>{data.type}{"\n"}{"\n"}{`Añadido: ${data.date}`}</Text>}
+                style={styles.itemList1}
+                theme={themeDefault}
+                left={()=><Image source={{ uri: data.image }} style={{ width: 110, height: 150, borderRadius: 4 }} /> }
             />
         </TouchableRipple>
         <Divider />
@@ -63,5 +95,7 @@ const itemList3 = (data: chapter, key: number, title: string, action: (url: stri
 export {
     itemList1,
     itemList2,
-    itemList3
+    itemList3,
+    itemList4,
+    ShowError
 };

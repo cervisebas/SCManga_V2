@@ -10,6 +10,13 @@ type popular = {
     url: string,
     type: string
 };
+type favorite = {
+    title: string,
+    image: string,
+    url: string,
+    type: string,
+    date: string
+};
 type resolveRecents = {
     newMangas: newMangas[],
     popular: popular[]
@@ -18,5 +25,6 @@ type resolveRecents = {
 export type {
     newMangas,
     popular,
-    resolveRecents
+    resolveRecents,
+    favorite
 };

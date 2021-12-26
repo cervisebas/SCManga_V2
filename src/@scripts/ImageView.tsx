@@ -17,7 +17,7 @@ export function ImageView3(props: IProps) {
     return(<Modal visible={props.visible} style={{ width: width, height: height }} dismissable={true} onDismiss={()=>props.dissmiss()}>
         <View style={styles.View1}>
             <View style={styles.View2}>
-                <Image style={styles.Image} source={{ uri: props.image }} />
+                <Image style={styles.Image} source={{ uri: ((props.image !== "")? props.image : undefined) }} />
             </View>
         </View>
     </Modal>);

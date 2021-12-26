@@ -91,7 +91,7 @@ export function ViewInfoManga3(props: IProps) {
     const renderScene = SceneMap({ info: viewInfo, chapters: viewChapters });
 
     loading();
-    return(<Modal visible={props.visible} dismissable={true} onDismiss={()=>props.close()}>
+    return(<Modal visible={props.visible} dismissable={true} onDismiss={()=>props.close()} contentContainerStyle={{ backgroundColor: '#FFFFFF' }}>
         <StatusBar backgroundColor="#c33509" barStyle="light-content" />
         <Appbar.Header dark={true} style={{ backgroundColor: Styles.backgroundPrimary.backgroundColor }}>
             <Appbar.BackAction onPress={()=>{ props.close(); }} />
@@ -104,7 +104,7 @@ export function ViewInfoManga3(props: IProps) {
         </Appbar.Header>
         <View style={styles.image}>
             <TouchableRipple onPress={()=>props.clickViewImage(props.data.image)} rippleColor="rgba(0, 0, 0, .32)">
-                <Image source={{ uri: props.data.image }} style={styles.imageComponent}/>
+                <Image source={{ uri: ((props.data.image !== "")? props.data.image : undefined) }} style={styles.imageComponent}/>
             </TouchableRipple>
         </View>
         <SafeAreaView style={styles.content}>

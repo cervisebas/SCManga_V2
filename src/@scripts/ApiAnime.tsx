@@ -1,7 +1,8 @@
 import cheerio from 'cheerio';
-import { newMangas, popular, resolveRecents } from '../@types/ApiManga';
+import { newMangas, popular, resolveRecents, favorite } from '../@types/ApiManga';
 import { gender, chapter, optionChapter, Info } from '../@types/ViewInfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 
 export class ApiManga {
@@ -147,8 +148,15 @@ export class ApiManga {
         return new Promise((resolve, reject)=>{
             this.getFavorites().then(async(favorites)=>{
                 try {
-                    var add: popular[] = [];
-                    add.push(data);
+                    var add: favorite[] = [];
+                    var date: string = moment().format("DD/MM/YYYY HH:mm");
+                    add.push({
+                        title: data.title,
+                        image: data.image,
+                        url: data.url,
+                        type: data.type,
+                        date: date
+                    });
                     var result = favorites.concat(add);
                     await AsyncStorage.setItem('favorites', JSON.stringify(result));
                     resolve(true);
@@ -158,10 +166,10 @@ export class ApiManga {
             });
         });
     }
-    async getFavorites(): Promise<popular[]> {
+    async getFavorites(): Promise<favorite[]> {
         return new Promise(async(resolve, reject)=>{
             try {
-                var list: popular[] = [];
+                var list: favorite[] = [];
                 var storage = await AsyncStorage.getItem('favorites');
                 resolve((storage !== null)? list.concat(JSON.parse(storage)) : list);   
             } catch (error) {

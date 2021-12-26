@@ -26,7 +26,7 @@ const defaultProps: Props = {
   loadingPaddingView: 25,
   loadingTextMargin: '3%',
   loaderContentDirection: "row",
-  borderRadius: 10,
+  borderRadius: 8,
   fontWeight: 'normal',
   colorText: '#000000'
 };
@@ -35,7 +35,7 @@ const { width } = Dimensions.get('window');
 
 const LoadingController: React.FC<Props> = (props: Props) => {
   var padding: number = ((width / 4) - 32);
-  return (<Modal visible={props.show} contentContainerStyle={{ backgroundColor: 'transparent', paddingLeft: padding, paddingRight: padding }} style={{ borderRadius: props.borderRadius }}>
+  return (<Modal visible={props.show} contentContainerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0)', paddingLeft: padding, paddingRight: padding }} style={{ borderRadius: props.borderRadius }}>
     <View style={{ backgroundColor: props.backgroundOverlayColor, alignItems: 'center', justifyContent: 'center' }}>
       <View style={{ padding: props.loadingPaddingView, backgroundColor: props.backgroundColor, borderRadius: props.borderRadius, width: (width - (padding * 2)) }}>
         <View style={{ flexDirection: props.loaderContentDirection, alignItems: 'center' }}>

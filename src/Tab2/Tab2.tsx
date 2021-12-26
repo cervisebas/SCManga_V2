@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Dimensions, FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import { Appbar, Text } from 'react-native-paper';
-import { popular } from '../@types/ApiManga';
+import { favorite } from '../@types/ApiManga';
 import { ApiManga } from '../@scripts/ApiAnime';
 import { HeartOff } from '../@Icons/Icons';
-import { itemList1 } from '../@scripts/Components';
-import { Global } from '../@scripts/Global';
+import { itemList4 } from '../@scripts/Components';
 import Styles from '../Styles';
 
 const apiManga = new ApiManga();
-const fglobal = new Global({});
 const { width, height } = Dimensions.get('window');
 
-interface IProps {};
+interface IProps {
+    goInfoManga: (url: string)=>any;
+};
 interface IState {
-    favotites: popular[];
+    favotites: favorite[];
     isLoading: boolean;
     empty: boolean;
 };
@@ -64,7 +64,7 @@ export class Tab2 extends Component<IProps, IState> {
                     data={this.state.favotites}
                     style={{ marginBottom: 116 }}
                     extraData={this.state.isLoading}
-                    renderItem={({item})=>itemList1(item, (url: string)=>fglobal.openViewInfo(url))}
+                    renderItem={({item})=>itemList4(item, (url: string)=>this.props.goInfoManga(url))}
                 />)}
             </SafeAreaView>
         </View>);

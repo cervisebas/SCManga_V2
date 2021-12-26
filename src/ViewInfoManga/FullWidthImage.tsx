@@ -12,7 +12,7 @@ interface IState {
     isLoad: boolean;
 };
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export class FullWidthImage extends Component<IProps, IState> {
     constructor(props: IProps) {
