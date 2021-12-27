@@ -6,8 +6,8 @@ import { ViewInfoManga3 } from '../ViewInfoManga/ViewInfoManga';
 import { ImageView3 } from './ImageView';
 import { ImageViewManga2 } from './ImageViewManga';
 import { ViewMangas } from '../ViewInfoManga/ViewMangas';
+import { themeDefault } from "../Styles";
 
-const themeLight = { ...DefaultTheme, dark: false };
 
 interface IProps {
     /* Information */
@@ -44,7 +44,7 @@ interface IProps {
 
 export function Global2(props: IProps) {
     return(
-        <Portal theme={themeLight}>
+        <Portal theme={themeDefault}>
             <ViewInfoManga3
                 visible={props.infoView}
                 data={props.infoData}
